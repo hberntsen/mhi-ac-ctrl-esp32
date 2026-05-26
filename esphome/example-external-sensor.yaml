@@ -164,8 +164,9 @@ sensor:
         Troom = min(Troom, TsetReported + TmaxDelta);
       }
 
-      // Use our new calculated value.
-      return Troom;
+      // The AC only supports a precision of 1/4th of a degree Celsius.
+      // We do the rounding here so we see in HA what the AC will see
+      return round(Troom * 4) / 4.0;
 
 number:
   # This slider defines the limit of how much degrees Celsius of a difference
