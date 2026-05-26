@@ -16,9 +16,9 @@ MhiVanesUD = cg.global_ns.class_("MhiVanesUD", cg.Component, select.Select)
 MhiVanesLR = cg.global_ns.class_("MhiVanesLR", cg.Component, select.Select)
 
 OPTIONS = {
-        "vanes_ud": ["Up", "Up/Center", "Center/Down", "Down", "Swing",
+        CONF_VANES_UD: ["Up", "Up/Center", "Center/Down", "Down", "Swing",
                      "3D Auto", "See IR Remote"],
-        "vanes_lr": ["Left", "Left/Center", "Center", "Center/Right", "Right",
+        CONF_VANES_LR: ["Left", "Left/Center", "Center", "Center/Right", "Right",
                      "Wide", "Spot", "Swing", "3D Auto"]
         }
 
