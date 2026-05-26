@@ -235,7 +235,6 @@ switch:
       id: ${device_id}_active_mode
 
 status_led:
-  pin:
-    #white led, off when all good
-    number: 19
+  #white led, off when all good
+  pin: GPIO19 # GPIO14 for UAC
 
