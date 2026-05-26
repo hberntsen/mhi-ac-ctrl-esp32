@@ -21,7 +21,7 @@ As described in the the [readme](README.md), this project officially supports th
 ### TinyTronics Universal Air Conditioning Controller
 The [Universal Air Conditioning Controller](https://www.tinytronics.nl/en/development-boards/microcontroller-boards/with-wi-fi/universal-air-conditioning-controller-esp32-s3) + [JST cable](https://www.tinytronics.nl/en/cables-and-connectors/cables-and-adapters/jst-compatible/jst-xh-female-to-dupont-female-compatible-cable-5p-15cm) and soldering them together will be enough to get you going.
 
-Note that board version <= 1.2 is known for generating some rate of frame errors. Users [reported](https://github.com/ginkage/MHI-AC-Ctrl-ESPHome/issues/196) (and [here](https://gathering.tweakers.net/forum/list_message/85326154#85326154) 🇳🇱) it regardless works fine for them. This is because this project automatically retransmits commands when a frame error occurs. Version 1.2 of the board can be modified to 0 frame errors by adding a 500 ohm resistor in between a GPIO on the bottom and the source pin of the MOSFET closest to the LED. The GPIO pin at the bottom should be used for the CLK. This is what @hberntsen uses and communicated to TinyTronics so they can improve it in a newer version.
+Note that board version < 1.3 is known for generating some rate of frame errors. Users [reported](https://github.com/ginkage/MHI-AC-Ctrl-ESPHome/issues/196) (and [here](https://gathering.tweakers.net/forum/list_message/85326154#85326154) 🇳🇱) it regardless works fine for them. This is because this project automatically retransmits commands when a frame error occurs. This issue has been fixed in version 1.3.
 
 ### DIY ESP32-C3 board
 
