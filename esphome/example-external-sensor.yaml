@@ -146,7 +146,6 @@ sensor:
         Troom += TsetReported - TsetInternal;
       }
 
-
       /*
       Limit the max temperature delta via a slider. When heating/cooling, the
       AC will see a temperature that is closer to your set point. Some AC
@@ -178,18 +177,24 @@ number:
   # * You set your AC to 20 degrees in heating mode
   # * You set this slider to 10 degrees
   #
-  # Then, the AC will see 18 degrees as room temperature, since 20-18 > 10.
+  # Then, the AC will see the unchanged 18 degrees as room temperature, since 
+  # 20-18 < 10.
   #
   # Suppose you now set this slider to 1.0, the AC will receive 19 degrees room
-  # temperature instead of 18. You might be able to use this to reduce power
-  # consumption and let your room heat/cool more gradually.
+  # temperature instead of 18. So, depending on your model, it will heat up the 
+  # room more slowly since it thinks it is almost there already. So you might 
+  # be able to use this to reduce power consumption and let your room heat/cool
+  # more gradually.
+  #
+  # If you don't want this slider, remove this part from the config and the 
+  # code block in the calculated_external_sensor that reads it.
   - platform: template
     id: ${device_id}_max_temperature_delta
     name: Max temperature delta
     min_value: 0
     max_value: 10
     step: 0.25
-    initial_value: 2
+    initial_value: 10
     optimistic: true
     on_value:
       - then:
