@@ -37,7 +37,10 @@ esp32_ble_tracker:
   scan_parameters:
     active: false
 
-bluetooth_proxy:
+# We need bthome_mithermometer to read the temperature on this device itself as
+# external temperature sensor for the AC. For other devices you can use the
+# bluetooth_proxy.
+#bluetooth_proxy:
 
 MhiAcCtrl:
   id: ${mhi_device_id}
