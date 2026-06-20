@@ -11,7 +11,7 @@ substitutions:
   device_id: "ac_example"
   # Unique device name in HA (sensor names will be prefixed by this name)
   device_name: "AC Example"
-  external_temperature_sensor_id: atc_temperature
+  external_temperature_sensor_id: bthome_temperature
 
 esphome:
   name: ac-example
@@ -36,6 +36,8 @@ esp32:
 esp32_ble_tracker:
   scan_parameters:
     active: false
+
+bluetooth_proxy:
 
 MhiAcCtrl:
   id: ${mhi_device_id}
@@ -101,11 +103,11 @@ sensor:
             - lambda: id(${device_id}_calculated_external_sensor).update();
 
   # Example: use this Bluetooth sensor as external temperature sensor
-  - platform: pvvx_mithermometer
+  - platform: bthome_mithermometer
     mac_address: "AA:BB:CC:DD:EE:FF"
     temperature:
-      id: atc_temperature
-      name: "ATC Temperature"
+      id: ${external_temperature_sensor_id}
+      name: "External Temperature Sensor"
       filters:
         # Stop using this sensor when it did not update in the last 10 minutes.
         - timeout: 10min
