@@ -7,8 +7,6 @@ substitutions:
 
 esphome:
   name: ac-example
-  platformio_options:
-    board_build.flash_mode: dio
 
 external_components:
   - source: components
