@@ -212,7 +212,7 @@ float SpiState::current_temperature_get() const {
 
 void SpiState::external_room_temperature_set(float value) {
   xSemaphoreTake(this->miso_semaphore_handle_, portMAX_DELAY);
-  if(std::isnan(value)) {
+  if(isnan(value)) {
     this->miso_frame_[DB3] = 0xff;
     ESP_LOGD(TAG, "Disabled external room temperature sensor");
   } else {
