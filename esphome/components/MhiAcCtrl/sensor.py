@@ -25,7 +25,8 @@ from esphome.const import (
     UNIT_AMPERE,
     UNIT_KILOWATT_HOURS,
     DEVICE_CLASS_ENERGY,
-    ICON_COUNTER
+    ICON_COUNTER,
+    DEVICE_CLASS_EMPTY
 )
 from . import MhiAcCtrl, CONF_MHI_AC_CTRL_ID
 
@@ -176,10 +177,10 @@ CONFIG_SCHEMA = cv.All(
             ),
             cv.Optional(CONF_OUTDOOR_HEAT_EXCHANGER_TEMPERATURE_1): sensor.sensor_schema(
                 accuracy_decimals=2,
-                device_class=DEVICE_CLASS_TEMPERATURE,
+                device_class=DEVICE_CLASS_EMPTY,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon=ICON_THERMOMETER,
-                unit_of_measurement=UNIT_CELSIUS,
+                unit_of_measurement=UNIT_EMPTY,
             ),
             cv.Optional(CONF_COMPRESSOR_FREQUENCY): sensor.sensor_schema(
                 accuracy_decimals=1,
@@ -203,7 +204,7 @@ CONFIG_SCHEMA = cv.All(
             ),
             cv.Optional(CONF_COMPRESSOR_DISCHARGE_PIPE_SUPER_HEAT_TEMPERATURE): sensor.sensor_schema(
                 accuracy_decimals=1,
-                device_class=DEVICE_CLASS_TEMPERATURE,
+                device_class=DEVICE_CLASS_EMPTY,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon=ICON_THERMOMETER,
                 unit_of_measurement=UNIT_EMPTY,

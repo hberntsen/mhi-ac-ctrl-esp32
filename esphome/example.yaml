@@ -186,7 +186,7 @@ sensor:
     indoor_suction_header_temperature:
       name: Indoor suction header temperature
 
-    # Formula for calculation not known for the following sensors:
+    # Formula for converting to Celsius not known for the following sensors:
     outdoor_heat_exchanger_temperature_1:
       name: Outdoor heat exchanger temperature 1
     compressor_discharge_pipe_super_heat_temperature:
