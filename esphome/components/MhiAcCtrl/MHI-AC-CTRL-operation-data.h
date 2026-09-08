@@ -16,8 +16,8 @@
   public: \
     ClassName() : OperationDataHelper() {} \
     const char* name() const override { return #ClassName; } \
-    bool matches(const std::span<uint8_t, DB12> mosi_frame) override { return MatchExpr; } \
-    void update(const std::span<uint8_t, DB12> mosi_frame) override { this->set_internal(UpdateExpr); } \
+    bool matches(const std::span<uint8_t, DB13> mosi_frame) override { return MatchExpr; } \
+    void update(const std::span<uint8_t, DB13> mosi_frame) override { this->set_internal(UpdateExpr); } \
     Texternal get() const override { return GetExpr; } \
   };
 
@@ -32,10 +32,10 @@ namespace operation_data {
     virtual void request(std::span<uint8_t, DB10> miso_frame);
 
     /// Returns true when this operationdata matches this mosi frame
-    virtual bool matches(const std::span<uint8_t, DB12> mosi_frame) = 0;
+    virtual bool matches(const std::span<uint8_t, DB13> mosi_frame) = 0;
 
     /// When matched, store the updated value
-    virtual void update(const std::span<uint8_t, DB12> mosi_frame) = 0;
+    virtual void update(const std::span<uint8_t, DB13> mosi_frame) = 0;
 
     bool has_value() const {
       return this->age != -1;
@@ -286,7 +286,7 @@ namespace operation_data {
       }
     }
 
-    void on_mosi(const std::span<uint8_t, DB12> mosi_frame) {
+    void on_mosi(const std::span<uint8_t, DB13> mosi_frame) {
       if(!this->value_semaphore_take()) {
         return;
       }

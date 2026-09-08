@@ -524,7 +524,7 @@ static void mhi_comm_task(void *arg)
             ESP_LOGW(TAG, "DB4 error %i", mosi_buf[DB4]);
           }
 
-          operation_data_state.on_mosi(std::span{mosi_buf}.first<DB12>());
+          operation_data_state.on_mosi(std::span{mosi_buf}.first<DB13>());
 
           if(mosi_buf[DB9] == 0x90 && (mosi_buf[DB6] & 0x80) == 0 && (mosi_buf[DB10] & 0x30) == 0x10) {
             // 29 CT
