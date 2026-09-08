@@ -270,19 +270,23 @@ namespace operation_data {
       }
 
       if(this->request_next) {
-        // Jump to the next enabled index after the current one
-        for(unsigned i = 0; i < all.size(); i++) {
-          auto all_index = (i + this->cycle_index + 1) % all.size();
-          auto x = all[all_index];
-          if(x->enabled) {
-            x->request(miso_frame);
-            this->cycle_index = all_index;
-            this->request_cycles = 0;
-            ESP_LOGD("MHI-AC-CTRL-Operation-Data", "Requested %s", x->name());
-            break;
+        if(miso_frame[DB6] != 0x00 || miso_frame[DB9] != 0x00) {
+          ESP_LOGD("MHI-AC-CTRL-Operation-Data", "DB6 or 9 is already set, skipping operation data request");
+        } else {
+          // Jump to the next enabled index after the current one
+          for(unsigned i = 0; i < all.size(); i++) {
+            auto all_index = (i + this->cycle_index + 1) % all.size();
+            auto x = all[all_index];
+            if(x->enabled) {
+              x->request(miso_frame);
+              this->cycle_index = all_index;
+              this->request_cycles = 0;
+              ESP_LOGD("MHI-AC-CTRL-Operation-Data", "Requested %s", x->name());
+              break;
+            }
           }
+          this->request_next = false;
         }
-        this->request_next = false;
       }
     }
 
