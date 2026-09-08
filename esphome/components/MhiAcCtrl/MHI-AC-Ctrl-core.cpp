@@ -397,7 +397,7 @@ static void mhi_comm_task(void *arg)
     esp_err_t err = 0;
     bool double_frame = false;
 
-    spi_slave_transaction_t spi_slave_trans;
+    spi_slave_transaction_t spi_slave_trans = {};
 
     //Set up a transaction of MHI_FRAME_LEN bytes to send/receive
     spi_slave_trans.length = mosi_buf.size() * 8;
