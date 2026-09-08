@@ -212,25 +212,54 @@ binary_sensor:
 switch:
   - platform: MhiAcCtrl
     mhi_ac_ctrl_id: ${mhi_device_id}
-    # Note that you'll need to enable the active mode switch before sending
-    # commands to the AC will work. Without that enabled, the ESP will
-    # passively listen to data and the AC won't know it is there. This has been
-    # done as a safety feature: when the AC unit does not see communicatons
-    # from the ESP after a while, the AC internally decides to turn off. This
-    # works together with the `api` component of ESPHome: the ESP will
-    # automatically reboot after 15 minutes when it does not have a Home
-    # Assistant connection. Since active mode is off by default, the AC will
-    # turn off when your Home Assistant connection dies. In addition, with
-    # active mode turned off you'll be able to use the timers from the IR
-    # remote again.
+
+    # When active mode is disabled we will only listen passively, so no data
+    # whatsoever is sent to the AC. It is disabled by default as a safety feature:
     #
-    # An automation blueprint to enable active mode automatically from home
-    # assistant is included in the homeassistant directory. Though you can also
-    # use the built in ESPHome features to enable this switch automatically.
-    # See https://github.com/hberntsen/mhi-ac-ctrl-esp32/issues/17#issuecomment-2744462292
+    # * The AC will turn itself off 5 minutes after we stop communicating.
+    # * The AC will allow you to use the timer feature of the remote again. The
+    #   AC disables that by itself while we are communicating with it.
+    #
+    # This example turns active mode on when an API client is detected (usually
+    # Home Assistant) and turns it off again when that is gone. We have a delay
+    # to prevent turning it off during lengthy Home Assistant reboots/updates.
+    # In case your network dies, Home Assistant crashes et cetera your AC will
+    # turn itself off and you can use the remote for your timers until
+    # everything is up and running again.
     active_mode:
       name: Active mode
       id: ${device_id}_active_mode
+
+network:
+
+api:
+  on_client_connected:
+    - wait_until:
+        condition:
+          api.connected:
+            # The intention is to only trigger this on a Home Assistant
+            # connection, somehow the `esphome logs` command also counts as a
+            # state subscription.
+            state_subscription_only: true
+    - switch.turn_on: ${device_id}_active_mode
+    - script.stop: turn_off_delayed
+
+  on_client_disconnected:
+    - script.execute: turn_off_delayed
+
+script:
+  - id: turn_off_delayed
+    mode: single
+    then:
+      - delay: 15min
+      - if:
+          condition:
+            not:
+              api.connected:
+                state_subscription_only: true
+          then:
+            - switch.turn_off: ${device_id}_active_mode
+
 
 status_led:
   #white led, off when all good
