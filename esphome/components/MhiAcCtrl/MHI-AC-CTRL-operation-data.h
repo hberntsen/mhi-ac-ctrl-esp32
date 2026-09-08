@@ -188,6 +188,11 @@ namespace operation_data {
     mosi_frame[DB12] << 8 | mosi_frame[DB11],
     this->last_value / 4.f)
 
+  DEFINE_OPERATION_DATA_CLASS(SilentOperation, 0xc0, 0xdd, uint8_t, bool,
+    mosi_frame[DB9] == 0xdd && mosi_frame[DB10] == 0x80,
+    mosi_frame[DB11] & 0x20,
+    this->last_value)
+
 
   class State {
   public:
@@ -196,7 +201,7 @@ namespace operation_data {
       xSemaphoreGive(this->value_semaphore_handle_);
     }
 
-    std::array<OperationData*, 22> get_all() {
+    std::array<OperationData*, 23> get_all() {
       // Not all OperationData is equally fast to retrieve. Interleave slow and instant ones, might help?
       return {
         &this->current_, // instant
@@ -222,11 +227,12 @@ namespace operation_data {
         &this->discharge_pipe_temperature_, // instant
         &this->compressor_discharge_pipe_super_heat_temperature_, // 18 times no match
         &this->outdoor_expansion_valve_pulse_rate_, // 39 times no match
-        &this->energy_used_ // instant
+        &this->energy_used_, // instant
+        &this->silent_operation_
       };
     }
 
-    std::array<OperationData*, 19> get_all_unique() {
+    std::array<OperationData*, 20> get_all_unique() {
       return {
         &this->current_,
         &this->set_temperature_,
@@ -246,7 +252,8 @@ namespace operation_data {
         &this->discharge_pipe_temperature_,
         &this->compressor_discharge_pipe_super_heat_temperature_,
         &this->outdoor_expansion_valve_pulse_rate_,
-        &this->energy_used_
+        &this->energy_used_,
+        &this->silent_operation_
       };
     }
 
@@ -341,6 +348,7 @@ namespace operation_data {
     CompressorTotalRunHours compressor_total_run_hours_;
     OutdoorExpansionValvePulseRate outdoor_expansion_valve_pulse_rate_;
     EnergyUsed energy_used_;
+    SilentOperation silent_operation_;
 
     uint32_t timeouts = 0;
 

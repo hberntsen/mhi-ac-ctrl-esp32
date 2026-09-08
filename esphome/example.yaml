@@ -229,6 +229,12 @@ switch:
     active_mode:
       name: Active mode
       id: ${device_id}_active_mode
+    # Outdoor unit Silent Mode, distinct from the indoor fan speed
+    #
+    # The IR remote and this WiFi module sometimes overrule each other. See
+    # https://github.com/hberntsen/mhi-ac-ctrl-esp32/pull/42 for a discussion.
+    silent_operation:
+      name: Silent operation
 
 network:
 
