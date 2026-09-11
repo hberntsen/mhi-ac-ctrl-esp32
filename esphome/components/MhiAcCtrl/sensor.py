@@ -101,12 +101,14 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon=ICON_THERMOMETER,
+                state_class=STATE_CLASS_MEASUREMENT,
                 unit_of_measurement=UNIT_CELSIUS,
             ),
             cv.Optional(CONF_POWER): sensor.sensor_schema(
                 class_=MhiPower,
                 unit_of_measurement=UNIT_WATT,
                 device_class=DEVICE_CLASS_POWER,
+                state_class=STATE_CLASS_MEASUREMENT,
             ),
             cv.Optional(CONF_FRAME_ERRORS): sensor.sensor_schema(
                 class_=MhiFrameErrors,
@@ -128,12 +130,14 @@ CONFIG_SCHEMA = cv.All(
                 unit_of_measurement=UNIT_CELSIUS,
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 icon=ICON_THERMOMETER,
+                state_class=STATE_CLASS_MEASUREMENT,
             ),
             cv.Optional(CONF_RETURN_AIR_TEMPERATURE): sensor.sensor_schema(
                 accuracy_decimals=2,
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon=ICON_THERMOMETER,
+                state_class=STATE_CLASS_MEASUREMENT,
                 unit_of_measurement=UNIT_CELSIUS,
             ),
             cv.Optional(CONF_INDOOR_U_BEND_TEMPERATURE): sensor.sensor_schema(
@@ -141,6 +145,7 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon=ICON_THERMOMETER,
+                state_class=STATE_CLASS_MEASUREMENT,
                 unit_of_measurement=UNIT_CELSIUS,
             ),
             cv.Optional(CONF_INDOOR_CAPILLARY_TEMPERATURE): sensor.sensor_schema(
@@ -148,6 +153,7 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon=ICON_THERMOMETER,
+                state_class=STATE_CLASS_MEASUREMENT,
                 unit_of_measurement=UNIT_CELSIUS,
             ),
             cv.Optional(CONF_INDOOR_SUCTION_HEADER_TEMPERATURE): sensor.sensor_schema(
@@ -155,6 +161,7 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon=ICON_THERMOMETER,
+                state_class=STATE_CLASS_MEASUREMENT,
                 unit_of_measurement=UNIT_CELSIUS,
             ),
             cv.Optional(CONF_INDOOR_FAN_SPEED): sensor.sensor_schema(
@@ -166,13 +173,14 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_DURATION,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon=ICON_TIMER,
-                state_class=STATE_CLASS_TOTAL,
+                state_class=STATE_CLASS_TOTAL_INCREASING,
                 unit_of_measurement=UNIT_HOUR,
             ),
             cv.Optional(CONF_OUTDOOR_AIR_TEMPERATURE): sensor.sensor_schema(
                 accuracy_decimals=2,
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 icon=ICON_THERMOMETER,
+                state_class=STATE_CLASS_MEASUREMENT,
                 unit_of_measurement=UNIT_CELSIUS,
             ),
             cv.Optional(CONF_OUTDOOR_HEAT_EXCHANGER_TEMPERATURE_1): sensor.sensor_schema(
@@ -180,6 +188,7 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_EMPTY,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon=ICON_THERMOMETER,
+                state_class=STATE_CLASS_MEASUREMENT,
                 unit_of_measurement=UNIT_EMPTY,
             ),
             cv.Optional(CONF_COMPRESSOR_FREQUENCY): sensor.sensor_schema(
@@ -187,6 +196,7 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_FREQUENCY,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon="mdi:sine-wave",
+                state_class=STATE_CLASS_MEASUREMENT,
                 unit_of_measurement=UNIT_HERTZ
             ),
             cv.Optional(CONF_DISCHARGE_PIPE_TEMPERATURE): sensor.sensor_schema(
@@ -194,12 +204,14 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon=ICON_THERMOMETER,
+                state_class=STATE_CLASS_MEASUREMENT,
                 unit_of_measurement=UNIT_CELSIUS,
             ),
             cv.Optional(CONF_CURRENT): sensor.sensor_schema(
                 accuracy_decimals=1,
                 device_class=DEVICE_CLASS_CURRENT,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
+                state_class=STATE_CLASS_MEASUREMENT,
                 unit_of_measurement=UNIT_AMPERE,
             ),
             cv.Optional(CONF_COMPRESSOR_DISCHARGE_PIPE_SUPER_HEAT_TEMPERATURE): sensor.sensor_schema(
@@ -207,6 +219,7 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_EMPTY,
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon=ICON_THERMOMETER,
+                state_class=STATE_CLASS_MEASUREMENT,
                 unit_of_measurement=UNIT_EMPTY,
             ),
             cv.Optional(CONF_COMPRESSOR_PROTECTION_STATE_NUMBER): sensor.sensor_schema(
@@ -238,6 +251,7 @@ CONFIG_SCHEMA = cv.All(
                 entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
                 icon="mdi:lightning-bolt",
                 unit_of_measurement=UNIT_KILOWATT_HOURS,
+                state_class=STATE_CLASS_TOTAL_INCREASING,
             ),
         }
     )
