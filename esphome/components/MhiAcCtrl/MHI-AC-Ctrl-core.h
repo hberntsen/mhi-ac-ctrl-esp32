@@ -100,6 +100,8 @@ public:
 
   void use_long_frame(bool long_frame_enabled);
 
+  void silent_operation_set(bool state);
+
   bool target_temperature_changed() const;
   void target_temperature_set(float target_temperature);
   float target_temperature_get() const;

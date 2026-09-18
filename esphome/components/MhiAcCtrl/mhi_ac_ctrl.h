@@ -109,6 +109,13 @@ protected:
         this->publish_state(state);
     }
 };
+
+class MhiSilentOperation : public switch_::Switch {
+protected:
+    virtual void write_state(bool state) {
+        mhi_ac::spi_state.silent_operation_set(state);
+    }
+};
 #endif
 
 #ifdef USE_SELECT
@@ -271,6 +278,9 @@ public:
         opdatas->energy_used_.enabled = this->energy_used_sensor_;
 #ifdef USE_BINARY_SENSOR
         opdatas->defrosting_.enabled = this->defrosting_binary_sensor_;
+#endif
+#ifdef USE_SWITCH
+        opdatas->silent_operation_.enabled = this->silent_operation_switch_;
 #endif
 
         if (this->external_room_temperature_sensor_ != nullptr) {
@@ -458,8 +468,8 @@ protected:
         }
       };
 
-#ifdef USE_BINARY_SENSOR
-      auto update_binary_sensor = [first_time](binary_sensor::BinarySensor* sensor, auto operation_data) {
+#if defined(USE_BINARY_SENSOR) || defined(USE_SWITCH)
+      auto update_binary = [first_time](auto* sensor, auto operation_data) {
         // A boolean sensor does not have get_raw_state and cannot be set to NAN to indicate we don't have a proper
         // value
         if(sensor) {
@@ -490,7 +500,10 @@ protected:
       update_sensor(this->outdoor_expansion_valve_pulse_rate_sensor_, &opdatas->outdoor_expansion_valve_pulse_rate_);
       update_sensor(this->energy_used_sensor_, &opdatas->energy_used_);
 #ifdef USE_BINARY_SENSOR
-      update_binary_sensor(this->defrosting_binary_sensor_, &opdatas->defrosting_);
+      update_binary(this->defrosting_binary_sensor_, &opdatas->defrosting_);
+#endif
+#ifdef USE_SWITCH
+      update_binary(this->silent_operation_switch_, &opdatas->silent_operation_);
 #endif
 
       opdatas->value_semaphore_give();
@@ -625,6 +638,7 @@ protected:
     mhi_ac::Config ac_config_;
 #ifdef USE_SWITCH
     MhiActiveMode *active_mode_switch_ = nullptr;
+    MhiSilentOperation *silent_operation_switch_ = nullptr;
 #endif
 
 public:
@@ -652,6 +666,10 @@ public:
 #ifdef USE_SWITCH
     void set_active_mode_switch(MhiActiveMode *swi) {
       this->active_mode_switch_ = swi;
+    }
+
+    void set_silent_operation_switch(MhiSilentOperation *swi) {
+      this->silent_operation_switch_ = swi;
     }
 #endif
 

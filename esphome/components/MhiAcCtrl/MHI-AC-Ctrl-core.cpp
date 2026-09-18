@@ -106,6 +106,13 @@ bool active_mode_get() {
     return active_mode;
 }
 
+void SpiState::silent_operation_set(bool state) {
+  xSemaphoreTake(this->miso_semaphore_handle_, portMAX_DELAY);
+  this->miso_frame_[DB9] = 0x21;
+  this->miso_frame_[DB10] = state ? 0x01 : 0x00;
+  xSemaphoreGive(this->miso_semaphore_handle_);
+}
+
 #define CLAMP(x, lower, upper) (MIN(upper, MAX(x, lower)))
 
 void SpiState::target_temperature_set(float target_temperature) {
@@ -490,7 +497,7 @@ static void mhi_comm_task(void *arg)
           // Successful SPI transaction. reset changes
 
           // Reset all indices we use to set settings, except DB3 (external temperature sensor)
-          constexpr std::array<size_t, 7> indices_to_erase = {DB0, DB1, DB2, DB6, DB9, DB16, DB17};
+          constexpr std::array<size_t, 8> indices_to_erase = {DB0, DB1, DB2, DB6, DB9, DB10, DB16, DB17};
 
           // When active_mode is off, always clear settings to prevent stale settings being applied when active mode
           // is activated later on. Otherwise, only reset when nothing has changed since we've copied it into miso_buf.
@@ -504,6 +511,7 @@ static void mhi_comm_task(void *arg)
             for(size_t i : indices_to_erase) {
               spi_state.miso_frame_[i] = 0x00;
             }
+            spi_state.miso_frame_[DB10] = 0xff;
           }
 
           xSemaphoreGive(spi_state.miso_semaphore_handle_);

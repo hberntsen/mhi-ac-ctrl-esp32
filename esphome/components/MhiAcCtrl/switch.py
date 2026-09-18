@@ -7,12 +7,15 @@ from esphome.const import (
 from . import MhiAcCtrl, CONF_MHI_AC_CTRL_ID
 
 CONF_ACTIVE_MODE = "active_mode"
+CONF_SILENT_OPERATION = "silent_operation"
 
 TYPES = [
     CONF_ACTIVE_MODE,
+    CONF_SILENT_OPERATION,
 ]
 
 MhiActiveMode = cg.global_ns.class_("MhiActiveMode", cg.Component, switch.Switch)
+MhiSilentOperation = cg.global_ns.class_("MhiSilentOperation", switch.Switch)
 
 CONFIG_SCHEMA = cv.All(
     cv.Schema(
@@ -23,6 +26,10 @@ CONFIG_SCHEMA = cv.All(
                 class_=MhiActiveMode,
                 entity_category=ENTITY_CATEGORY_CONFIG,
                 icon="mdi:connection",
+            ),
+            cv.Optional(CONF_SILENT_OPERATION): switch.switch_schema(
+                class_=MhiSilentOperation,
+                icon="mdi:fan-chevron-down",
             ),
         }
     )
