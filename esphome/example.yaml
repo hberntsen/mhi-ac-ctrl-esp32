@@ -91,6 +91,12 @@ sensor:
     #
     # These sensors provide some internal stats, not all interesting. Similarly
     # to the rest of the sensors: only keep the ones you'll actually look at.
+    #
+    # It has been reported that not all sensors are available on all models.
+    # These sensors will report "unknown" or NaN as value and you'll see 
+    # operation_data_visible_timeouts incrementing. It's best you remove them
+    # from your configuration. See
+    # https://github.com/hberntsen/mhi-ac-ctrl-esp32/issues/36 for a discussion.
 
     # Data is requested sensor by sensor (when present) from the AC, which
     # should always answer, but might not. The timeout sensor counts how many
