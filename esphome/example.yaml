@@ -153,7 +153,7 @@ sensor:
     # * + 2 degrees celcius when heating, unless the built in countermeasure
     #   for excessive temperature rise is used.
     set_temperature:
-      name: Ret temperature
+      name: Set temperature
     return_air_temperature:
       name: Return air temperature
     # More granular fan speed than we can see in the climate directly
