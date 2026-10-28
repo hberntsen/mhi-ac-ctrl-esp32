@@ -244,6 +244,11 @@ switch:
 
 network:
 
+# Uncomment to connect to the wifi
+#wifi:
+#  ssid: !secret wifi_ssid
+#  password: !secret wifi_password
+
 api:
   on_client_connected:
     - wait_until:
